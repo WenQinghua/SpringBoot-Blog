@@ -1,9 +1,9 @@
 package cn.wenqinghua.blog.po;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -12,7 +12,12 @@ public class Type {
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotBlank(message = "分类名称不能为空")
     private String name;
+
+    @OneToMany(mappedBy = "type")
+    private List<Blog> blogs = new ArrayList<Blog>();
 
     public Type() {
     }
@@ -31,6 +36,14 @@ public class Type {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Blog> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(List<Blog> blogs) {
+        this.blogs = blogs;
     }
 
     @Override
